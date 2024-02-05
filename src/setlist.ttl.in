@@ -1,0 +1,31 @@
+@prefix doap:  <http://usefulinc.com/ns/doap#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
+@prefix ui:    <http://lv2plug.in/ns/extensions/ui#> .
+
+<https://lvtk.org/plugins/setlist>
+    a lv2:Plugin, doap:Project ;
+    doap:name "MIDI Set List" ;
+    doap:maintainer [
+        foaf:name "LVTK" ;
+        foaf:homepage <https://lvtk.org> ;
+    ];
+    doap:license <http://opensource.org/licenses/gpl> ;
+    
+    lv2:minorVersion 0;
+    lv2:microVersion 0;
+
+    lv2:optionalFeature lv2:hardRTCapable ;
+    ui:ui <https://lvtk.org/plugins/setlist/ui> ;
+
+    lv2:port [
+        a lv2:InputPort, lv2:AtomPort;
+        lv2:index 0 ;
+        lv2:symbol "events_in" ;
+        lv2:name "Events In" ;
+    ] , [
+        a lv2:OutputPort, lv2:AtomPort;
+        lv2:index 1 ;
+        lv2:symbol "events_out" ;
+        lv2:name "Events Out" ;
+    ] .
