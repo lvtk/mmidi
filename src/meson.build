@@ -1,6 +1,4 @@
-fs = import ('fs')
 
-lv2_bundle = 'setlist.lv2'
 mmidi_sources = files ('''
     setlist.cpp
 '''.split())
@@ -18,24 +16,6 @@ elif host_machine.system() == 'darwin'
     mmidi_ui_type = 'CocoaUI'
 endif
 
-lv2_install_dir = get_option ('lv2dir').strip()
-if lv2_install_dir != ''
-    lv2_install_dir = fs.expanduser (lv2_install_dir)
-endif
-
-if lv2_install_dir == ''
-    if target_machine.system() == 'darwin'
-        lv2_install_dir = fs.expanduser ('~/Library/Audio/Plug-Ins/LV2')
-    elif target_machine.system() == 'haiku'
-        lv2_install_dir = '/boot/common/add-ons/lv2'
-    elif target_machine.system() == 'windows'
-        lv2_install_dir = fs.expanduser ('~/AppData/Roaming/LV2')
-    else
-        lv2_install_dir = fs.expanduser('~/.lv2')
-    endif
-endif
-
-lv2_install_dir = lv2_install_dir / lv2_bundle
 
 plugin = shared_module ('mmidi',
     mmidi_sources,

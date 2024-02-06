@@ -1,4 +1,4 @@
-project ('mmidi', ['c', 'cpp'], 
+project ('mmidi', ['c', 'cpp'],
     version : '1.0.0',
     default_options : [ 
         'cpp_std=c++17', 
@@ -8,40 +8,12 @@ project ('mmidi', ['c', 'cpp'],
         'c_std=c99',
     ])
 
-# Add objective-c if on mac
-if host_machine.system() == 'darwin'
-  add_languages(['objc', 'objcpp'], native : false, required : true)
-  objcc = meson.get_compiler ('objc')
-  objcpp = meson.get_compiler ('objcpp')
-endif
+fs = import ('fs')
 
-lv2_validate = find_program ('lv2_validate', required : false)
+subdir('meson/lvtk-cairo')
 
-if not meson.is_subproject()
-    add_global_arguments (['-DLVTK_STATIC=1', '-DPUGL_STATIC=1'],
-        language : [ 'c', 'cpp' ])
-endif
-
-lvtk_opts = [
-    'doc=disabled',
-    'test=disabled',
-    'demo=disabled',
-    'default_library=static'
-]
-
-lvtk_dep = dependency ('lvtk-3', 
-    fallback : [ 'lvtk', 'lvtk_dep' ],
-    version : '>= 3.0.0',
-    default_options : lvtk_opts,
-    required : true
-)
-
-lvtk_cairo_dep = dependency ('lvtk-cairo-3', 
-    fallback : [ 'lvtk', 'lvtk_cairo_dep' ],
-    version : '>= 3.0.0',
-    default_options : lvtk_opts,
-    required : true
-)
+lv2_bundle = 'mmidi.lv2'
+lv2_install_dir = lv2_install_dir / lv2_bundle
 
 subdir ('src')
 
